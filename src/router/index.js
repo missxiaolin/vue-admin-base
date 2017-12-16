@@ -72,6 +72,19 @@ export const asyncRouterMap = [
         name: 'excel导出'
       }
     ]
+  }, {
+    path: '/assembly',
+    component: layout,
+    redirect: '/assembly/index',
+    name: '组件',
+    icon: 'component',
+    children: [
+      {
+        path: 'index',
+        component: _import('assembly/index'),
+        name: '介绍'
+      }
+    ]
   }
 ]
 
