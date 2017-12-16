@@ -78,6 +78,7 @@ export const asyncRouterMap = [
     redirect: '/assembly/index',
     name: '组件',
     icon: 'icon-zujianku',
+    noDropdown: false,
     children: [
       {
         path: 'index',
