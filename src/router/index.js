@@ -77,7 +77,7 @@ export const asyncRouterMap = [
     component: layout,
     redirect: '/assembly/index',
     name: '组件',
-    icon: 'component',
+    icon: 'icon-zujianku',
     children: [
       {
         path: 'index',
