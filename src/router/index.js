@@ -78,7 +78,11 @@ export const asyncRouterMap = [{
     path: 'tinymce',
     component: _import('assembly/tinymce'),
     name: '富文本编辑器'
-  }]
+  }, {
+    path: 'markdown',
+    component: _import('assembly/markdown'),
+    name: 'Markdown'
+  }, ]
 }]
 
 export default new Router({
