@@ -32,7 +32,9 @@
     "vue-lazyload": "1.0.3",
     "vue-router": "^3.0.1",
     "vuex": "^2.3.1",
-    "xlsx": "^0.10.8"
+    "xlsx": "^0.10.8",
+    "codemirror": "5.26.0",
+    "jsonlint": "1.6.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
