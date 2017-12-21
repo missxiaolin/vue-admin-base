@@ -9,7 +9,7 @@
 
 <script>
 import jsonEditor from 'base/jsonEditor'
-const jsonData = '[{"items":[{"market_type":"forexdata","symbol":"XAUUSD"},{"market_type":"forexdata","symbol":"UKOIL"}]'
+const jsonData = '[{"market_type":"forexdata","symbol":"XAUUSD"},{"market_type":"forexdata","symbol":"UKOIL"}]'
 
 export default {
   components: {jsonEditor},
