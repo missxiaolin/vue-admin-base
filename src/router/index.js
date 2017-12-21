@@ -82,7 +82,11 @@ export const asyncRouterMap = [{
     path: 'markdown',
     component: _import('assembly/markdown'),
     name: 'Markdown'
-  }, ]
+  }, {
+    path: 'jsoneditor',
+    component: _import('assembly/jsonEditor'),
+    name: 'jsoneditor'
+  } ]
 }]
 
 export default new Router({
