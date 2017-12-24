@@ -86,6 +86,10 @@ export const asyncRouterMap = [{
     path: 'jsoneditor',
     component: _import('assembly/jsonEditor'),
     name: 'jsoneditor'
+  }, {
+    path: 'avatarupload',
+    component: _import('assembly/avatarUpload'),
+    name: '头像上传'
   } ]
 }]
 
