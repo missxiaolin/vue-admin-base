@@ -4,7 +4,7 @@
       基于<a class='link-type' href='https://github.com/rowanwins/vue-dropzone'> dropzone </a>
     </code>
     <div class="editor-container">
-      <dropzone  id="myVueDropzone" url="https://httpbin.org/post"></dropzone>
+      <dropzone  v-on:dropzone-removedFile="dropzoneR" v-on:dropzone-success="dropzoneS" id="myVueDropzone" url="https://httpbin.org/post"></dropzone>
     </div>
   </div>
 </template>
