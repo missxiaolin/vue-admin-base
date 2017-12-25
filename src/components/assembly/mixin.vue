@@ -8,14 +8,34 @@
         </el-form>
         <code class='code-part'>Material Design 的input</code>
       </div>
+
+      <div class='component-item'>
+        <pan-thumb image='https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'>
+          上海花裤衩
+        </pan-thumb>
+        <code class='code-part'>图片hover效果</code>
+      </div>
+
+      <div class='component-item'>
+        <el-button v-waves type="primary">水波纹效果</el-button>
+        <code class='code-part'>水波纹 v-directive</code>
+      </div>
+
   </div>
 </template>
 
 <script>
+import PanThumb from "base/PanThumb";
 import MdInput from "base/MDinput";
+import waves from 'common/js/waves/index.js' // 水波纹指令
+
 export default {
   components: {
+    PanThumb,
     MdInput
+  },
+  directives: {
+    waves
   },
   data() {
     const validate = (rule, value, callback) => {
