@@ -90,7 +90,11 @@ export const asyncRouterMap = [{
     path: 'avatarupload',
     component: _import('assembly/avatarUpload'),
     name: '头像上传'
-  } ]
+  }, {
+    path: 'dropzone',
+    component: _import('assembly/dropzone'),
+    name: 'Dropzone'
+  }]
 }]
 
 export default new Router({
