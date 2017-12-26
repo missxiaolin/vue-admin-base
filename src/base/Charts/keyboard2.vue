@@ -22,6 +22,21 @@ export default {
     height: {
       type: String,
       default: "200px"
+    },
+    // 参数
+    chartData: {
+      type: Array,
+      default: null
+    },
+    // 数据1
+    dataOne: {
+      type: Array,
+      default: null
+    },
+    // 数据2
+    dataTwo: {
+      type: Array,
+      default: null
     }
   },
   data() {
@@ -43,14 +58,9 @@ export default {
     initChart() {
       this.chart = echarts.init(document.getElementById(this.id));
 
-      const xAxisData = [];
-      const data = [];
-      const data2 = [];
-      for (let i = 0; i < 50; i++) {
-        xAxisData.push(i);
-        data.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
-        data2.push((Math.sin(i / 5) * (i / 5 + 10) + i / 6) * 3);
-      }
+      const xAxisData = this.chartData || [];
+      const data = this.dataOne || [];
+      const data2 = this.dataTwo || [];
       this.chart.setOption({
         backgroundColor: "#08263a",
         xAxis: [
