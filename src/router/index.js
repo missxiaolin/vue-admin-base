@@ -78,7 +78,7 @@ export const asyncRouterMap = [
     icon: 'icon-zip',
     noDropdown: false,
     children: [
-      { path: 'download', component: _import('zip/index'), name: 'export zip' },
+      { path: 'download', component: _import('zip/index'), name: 'export zip' }
     ]
 }]
 
