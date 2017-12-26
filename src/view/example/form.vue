@@ -68,6 +68,41 @@
                         </MDinput>
                         <span v-show="postForm.title.length>=26" class='title-prompt'>app可能会显示不全</span>
                     </el-form-item>
+
+                    <div class="postInfo-container">
+                        <el-row>
+                            <el-col :span="8">
+                                <el-form-item label-width="45px" label="作者:" class="postInfo-container-item">
+                                    <multiselect v-model="postForm.author" :options="userLIstOptions" @search-change="getRemoteUserList" placeholder="搜索用户" selectLabel="选择"
+                                    deselectLabel="删除" track-by="key" :internalSearch="false" label="key">
+                                    <span slot='noResult'>无结果</span>
+                                    </multiselect>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-tooltip class="item" effect="dark" content="将替换作者" placement="top">
+                                    <el-form-item label-width="50px" label="来源:" class="postInfo-container-item">
+                                    <el-input placeholder="将替换作者" style='min-width:150px;' v-model="postForm.source_name">
+                                    </el-input>
+                                    </el-form-item>
+                                </el-tooltip>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item label-width="80px" label="发布时间:" class="postInfo-container-item">
+                                    <el-date-picker v-model="postForm.display_time" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间">
+                                    </el-date-picker>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-form-item style="margin-bottom: 40px;" label-width="45px" label="摘要:">
+                            <el-input type="textarea" class="article-textarea" :rows="1" autosize placeholder="请输入内容" v-model="postForm.content_short">
+                            </el-input>
+                            <span class="word-counter" v-show="contentShortLength">{{contentShortLength}}字</span>
+                        </el-form-item>
+                        <div class="editor-container">
+                            <tinymce :height=400 ref="editor" v-model="postForm.content"></tinymce>
+                        </div>
+                    </div>
                 </el-col>
             </el-row>
         </div>
@@ -78,19 +113,22 @@
 
 <script>
 import Sticky from "base/Sticky"; // 粘性header组件
-import MDinput from 'base/MDinput'
+import MDinput from "base/MDinput";
+import Multiselect from "vue-multiselect"; // 使用的一个多选框组件，element-ui的select不能满足所有需求
+import "vue-multiselect/dist/vue-multiselect.min.css"; // 多选框组件css
+import Tinymce from 'base/Tinymce'
+
 export default {
   name: "articleDetail",
-  components: { Sticky, MDinput },
+  components: { Sticky, MDinput, Multiselect, Tinymce },
   data() {
     const validateRequire = (rule, value, callback) => {
-        console.log(rule.field)
       if (value === "") {
         this.$message({
           message: rule.field + "为必传项",
           type: "error"
         });
-        callback(false);
+        callback("");
       } else {
         callback();
       }
@@ -104,7 +142,7 @@ export default {
             message: "外链url填写不正确",
             type: "error"
           });
-          callback(false);
+          callback("");
         }
       } else {
         callback();
@@ -137,6 +175,11 @@ export default {
         source_uri: [{ validator: validateSourceUri, trigger: "blur" }]
       }
     };
+  },
+  computed: {
+    contentShortLength() {
+      return this.postForm.content_short.length;
+    }
   },
   methods: {
     submitForm() {
@@ -177,6 +220,15 @@ export default {
         duration: 1000
       });
       this.postForm.status = "draft";
+    },
+    getRemoteUserList(query) {
+        this.userLIstOptions = [
+            {key: '小林'},
+            {key: '小王'},
+            {key: '小北'},
+            {key: '小李'},
+            {key: '小德'}
+        ]
     }
   }
 };
