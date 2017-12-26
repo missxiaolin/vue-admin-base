@@ -1,44 +1,36 @@
 <template>
 	<div class="app-container">
-    <el-button style='margin-bottom:20px;' type="primary" icon="document"
-              @click="handleDownload"
-              :loading="downloadLoading">导出excel</el-button>
-    <el-table :data="list" v-loading.body="listLoading" element-loading-text="拼命加载中" border fit highlight-current-row>
-      <el-table-column
+    <el-button style='margin-bottom:20px'
+                type="primary"
+                icon="document"
+                @click="handleDownload"
+                :loading="downloadLoading">导出已选择项</el-button>
+    <el-table :data="list" 
+                v-loading.body="listLoading"
+                element-loading-text="拼命加载中"
+                @selection-change="handleSelectionChange" border fit highlight-current-row>
+        <el-table-column type="selection" align="center"></el-table-column>
+        <el-table-column
         prop="shop_id"
         label="ID"
         width="95">
-      </el-table-column>
-      <el-table-column
+        </el-table-column>
+        <el-table-column
         prop="shop_name"
         label="门店名称">
-      </el-table-column>
-      <el-table-column
-        prop="province"
-        label="省份"
-        width="95">
-      </el-table-column>
-      <el-table-column
-        prop="city"
-        label="城市"
-        width="95">
-      </el-table-column>
-      <el-table-column
+        </el-table-column>
+        <el-table-column
         prop="address"
         label="门店地址">
-      </el-table-column>
-      <el-table-column
-        prop="business_hours"
-        label="营业时间">
-      </el-table-column>
-      <el-table-column
+        </el-table-column>
+        <el-table-column
         prop="created_at"
         label="创建时间">
-      </el-table-column>
-      <el-table-column
+        </el-table-column>
+        <el-table-column
         prop="updated_at"
         label="修改时间">
-      </el-table-column>
+        </el-table-column>
     </el-table>
     <div class="page">
       <el-pagination
@@ -67,6 +59,7 @@ export default {
   data() {
     return {
       list: null,
+      multipleSelection: [],
       listLoading: true,
       downloadLoading: false,
       currentPage4: 1,
@@ -83,21 +76,32 @@ export default {
     this.getShopList();
   },
   methods: {
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
     // 导出excel
     handleDownload() {
-      this.downloadLoading = true;
-      require.ensure([], () => {
-        const {
-          export_json_to_excel
-        } = require("common/js/excel/Export2Excel");
-        const tHeader = ["门店id", "门店名称"];
-        const filterVal = ["shop_id", "shop_name"];
-        const list = this.list;
-        const data = formatJson(filterVal, list);
+        // 判断是否选择了表格
+      if (this.multipleSelection.length) {
+        this.downloadLoading = true;
+        require.ensure([], () => {
+          const {
+            export_json_to_excel
+          } = require("common/js/excel/Export2Excel");
+          const tHeader = ["门店id", "门店名称"];
+          const filterVal = ["shop_id", "shop_name"];
+          const list = this.list;
+          const data = formatJson(filterVal, list);
 
-        export_json_to_excel(tHeader, data, "列表excel");
-        this.downloadLoading = false;
-      });
+          export_json_to_excel(tHeader, data, "列表excel");
+          this.downloadLoading = false;
+        });
+      } else {
+        this.$message({
+          message: "请至少选择一条记录",
+          type: "warning"
+        });
+      }
     },
     // 获取shop数据
     getShopList() {
