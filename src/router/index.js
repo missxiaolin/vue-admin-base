@@ -94,6 +94,15 @@ export const asyncRouterMap = [
       { path: 'line', component: _import('charts/line'), name: '折线图' },
       { path: 'mixchart', component: _import('charts/mixChart'), name: '混合图表' }
     ]
+  }, {
+    path: '/example',
+    component: layout,
+    redirect: '/example/form/edit',
+    name: '综合实例',
+    icon: 'example',
+    children: [
+      { path: 'form/edit', icon: 'form', component: _import('example/form'), name: '编辑Form', meta: { isEdit: true } }
+    ]
   }
 ]
 
