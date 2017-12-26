@@ -22,6 +22,21 @@ export default {
     height: {
       type: String,
       default: "200px"
+    },
+    // 参数
+    chartData: {
+      type: Array,
+      default: null
+    },
+    // 参数key
+    chartKeyData: {
+      type: Array,
+      default: null
+    },
+    // 前缀
+    name: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -41,14 +56,11 @@ export default {
   },
   methods: {
     initChart() {
+      let that = this;
       this.chart = echarts.init(document.getElementById(this.id));
 
-      const xAxisData = [];
-      const data = [];
-      for (let i = 0; i < 30; i++) {
-        xAxisData.push(i + "号");
-        data.push(Math.round(Math.random() * 2 + 3));
-      }
+      const xAxisData = this.chartData || [];
+      const data = this.chartKeyData || [];
       this.chart.setOption({
         backgroundColor: "#08263a",
         tooltip: {
@@ -95,7 +107,7 @@ export default {
           {
             type: "bar",
             data,
-            name: "撸文数",
+            name: that.name,
             itemStyle: {
               normal: {
                 barBorderRadius: 5,
