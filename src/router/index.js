@@ -90,7 +90,8 @@ export const asyncRouterMap = [
     children: [
       { path: 'index', component: _import('charts/index'), name: '介绍' },
       { path: 'keyboard', component: _import('charts/keyboard'), name: '键盘图表' },
-      { path: 'keyboard2', component: _import('charts/keyboard2'), name: '键盘图表2' }
+      { path: 'keyboard2', component: _import('charts/keyboard2'), name: '键盘图表2' },
+      { path: 'line', component: _import('charts/line'), name: '折线图' }
     ]
   }
 ]
