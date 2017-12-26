@@ -101,7 +101,18 @@ export const asyncRouterMap = [
     name: '综合实例',
     icon: 'icon-zonghe',
     children: [
-      { path: 'form/edit', icon: 'icon-form', component: _import('example/form'), name: 'Form' }
+      { path: 'form/edit', icon: 'icon-form', component: _import('example/form'), name: 'Form' },
+      {
+        path: '/example/table',
+        component: _import('example/table/index'),
+        redirect: '/example/table/table',
+        name: 'Table',
+        icon: 'icon-table',
+        noDropdown: false,
+        children: [
+          { path: 'table', component: _import('example/table/table'), name: '综合table' }
+        ]
+      }
     ]
   }
 ]
