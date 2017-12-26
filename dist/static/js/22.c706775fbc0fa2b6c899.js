@@ -1,0 +1,2 @@
+webpackJsonp([22],{"1spC":function(e,n,t){"use strict";var r=function(){var e=this,n=e.$createElement;return(e._self._c||n)("div",{staticClass:"dashboard-editor-container"},[e._v("\n    简述\n  ")])},s=[],a={render:r,staticRenderFns:s};n.a=a},Ke3Q:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var r=t("1spC"),s=t("42hr"),a=s(null,r.a,!1,null,null,null);n.default=a.exports}});
+//# sourceMappingURL=22.c706775fbc0fa2b6c899.js.map
