@@ -80,6 +80,16 @@ export const asyncRouterMap = [
     children: [
       { path: 'download', component: _import('zip/index'), name: 'export zip' }
     ]
+}, {
+  path: '/charts',
+  component: layout,
+  redirect: '/charts/index',
+  name: '图表',
+  icon: 'icon-tubiao',
+  noDropdown: false,
+  children: [
+    { path: 'index', component: _import('charts/index'), name: '介绍' }
+  ]
 }]
 
 export default new Router({
