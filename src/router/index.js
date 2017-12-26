@@ -48,6 +48,7 @@ export const asyncRouterMap = [
     children: [
       { path: 'download', component: _import('excel/index'), name: 'excel导出' },
       { path: 'download2', component: _import('excel/selectExcel'), name: 'export selected' },
+      { path: 'upload', component: _import('excel/uploadExcel'), name: 'upload excel' }
     ]
   }, {
     path: '/assembly',
