@@ -101,7 +101,7 @@ export const asyncRouterMap = [
     name: '综合实例',
     icon: 'icon-zonghe',
     children: [
-      { path: 'form/edit', icon: 'icon-form', component: _import('example/form'), name: '编辑Form', meta: { isEdit: true } }
+      { path: 'form/edit', icon: 'icon-form', component: _import('example/form'), name: 'Form' }
     ]
   }
 ]
