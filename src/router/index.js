@@ -70,7 +70,17 @@ export const asyncRouterMap = [
       { path: 'backtotop', component: _import('assembly/backToTop'), name: '返回顶部' },
       { path: 'dndlist', component: _import('assembly/dndList'), name: '列表拖拽' }
     ]
-  }]
+  }, {
+    path: '/zip',
+    component: layout,
+    redirect: '/zip/download',
+    name: 'zip',
+    icon: 'icon-zip',
+    noDropdown: false,
+    children: [
+      { path: 'download', component: _import('zip/index'), name: 'export zip' },
+    ]
+}]
 
 export default new Router({
   mode: 'history',
