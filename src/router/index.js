@@ -64,7 +64,8 @@ export const asyncRouterMap = [
       { path: 'dropzone', component: _import('assembly/dropzone'), name: 'Dropzone' },
       { path: 'sticky', component: _import('assembly/sticky'), name: 'Sticky' },
       { path: 'splitpane', component: _import('assembly/splitpane'), name: 'Splitpane' },
-      { path: 'mixin', component: _import('assembly/mixin'), name: '小组件' }
+      { path: 'mixin', component: _import('assembly/mixin'), name: '小组件' },
+      { path: 'backtotop', component: _import('assembly/backToTop'), name: '返回顶部' }
     ]
   }]
 

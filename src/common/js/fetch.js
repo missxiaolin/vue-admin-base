@@ -49,10 +49,10 @@ service.interceptors.response.use(
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        routes.push({name: 'login'})
+        routes.push({ name: 'login' })
       })
     } else if (res.code == error.ERROR_AUTHORITY) { // 权限
-      routes.push({name: '401'})
+      routes.push({ name: '401' })
     }
     return response
   },
