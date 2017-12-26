@@ -46,7 +46,8 @@ export const asyncRouterMap = [
     icon: 'icon-Excel',
     noDropdown: false,
     children: [
-      { path: 'download', component: _import('excel/index'), name: 'excel导出' }
+      { path: 'download', component: _import('excel/index'), name: 'excel导出' },
+      { path: 'download2', component: _import('excel/selectExcel'), name: 'export selected' },
     ]
   }, {
     path: '/assembly',
