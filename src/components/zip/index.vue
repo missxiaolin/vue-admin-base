@@ -70,14 +70,14 @@ export default {
       this.downloadLoading = true;
       require.ensure([], () => {
         const {
-          export_json_to_excel
-        } = require("common/js/excel/Export2Excel");
+          export_txt_to_zip
+        } = require("common/js/excel/Export2Zip");
         const tHeader = ["门店id", "门店名称"];
         const filterVal = ["shop_id", "shop_name"];
         const list = this.list;
         const data = formatJson(filterVal, list);
 
-        export_json_to_excel(tHeader, data, "列表excel");
+        export_txt_to_zip(tHeader, data, "列表excel");
         this.downloadLoading = false;
       });
     },
