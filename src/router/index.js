@@ -48,6 +48,14 @@ export const asyncRouterMap = [
       { path: 'index', component: _import('clipboard/index'), name: 'clipboard' }
     ]
   }, {
+    path: '/theme',
+    component: layout,
+    redirect: '/theme/index',
+    name: 'theme',
+    icon: 'theme',
+    noDropdown: true,
+    children: [{ path: 'index', component: _import('theme/index'), name: '换肤' }]
+  }, {
     path: '/excel',
     component: layout,
     redirect: '/excel/download',
