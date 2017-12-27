@@ -52,7 +52,7 @@ export const asyncRouterMap = [
     component: layout,
     redirect: '/theme/index',
     name: 'theme',
-    icon: 'theme',
+    icon: 'icon-pifu',
     noDropdown: true,
     children: [{ path: 'index', component: _import('theme/index'), name: '换肤' }]
   }, {
