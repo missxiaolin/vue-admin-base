@@ -113,7 +113,7 @@ export const asyncRouterMap = [
         children: [
           { path: 'dynamictable', component: _import('example/table/dynamictable/index'), name: '动态table' },
           { path: 'dragtable', component: _import('example/table/dragTable'), name: '拖拽table' },
-          { path: 'table', component: _import('example/table/table'), name: '综合table' }
+          { path: 'table', component: _import('example/table/table'), name: 'table内编辑' }
         ]
       }
     ]
