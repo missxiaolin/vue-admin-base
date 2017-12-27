@@ -117,6 +117,15 @@ export const asyncRouterMap = [
         ]
       }
     ]
+  }, {
+    path: '/clipboard',
+    component: layout,
+    redirect: '/clipboard/index',
+    icon: 'icon-fuzhi',
+    noDropdown: true,
+    children: [
+      { path: 'index', component: _import('clipboard/index'), name: 'clipboard' }
+    ]
   }
 ]
 
