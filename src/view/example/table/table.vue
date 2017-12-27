@@ -10,8 +10,11 @@
         width="95">
       </el-table-column>
       <el-table-column
-        prop="shop_name"
         label="门店名称">
+        <template slot-scope="scope">
+          <el-input v-show="scope.row.edit" size="small" v-model="scope.row.shop_name"></el-input>
+          <span v-show="!scope.row.edit">{{ scope.row.shop_name }}</span>
+        </template>
       </el-table-column>
       <el-table-column
         prop="address"
@@ -29,6 +32,11 @@
         prop="updated_at"
         label="修改时间">
       </el-table-column>
+      <el-table-column align="center" label="编辑" width="120">
+        <template slot-scope="scope">
+          <el-button :type="scope.row.edit?'success':'primary'" @click='scope.row.edit=!scope.row.edit' size="small" icon="edit">{{scope.row.edit?'完成':'编辑'}}</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="page">
       <el-pagination
@@ -45,8 +53,8 @@
 </template>
 
 <script>
-import { shopList } from "@/api/shop";
-import { ERR_OK } from "@/api/config";
+import { shopList } from "api/shop";
+import { ERR_OK } from "api/config";
 
 import { Message } from "element-ui";
 
@@ -95,7 +103,11 @@ export default {
       shopList(this.shopParams).then(response => {
         let shopData = response.data;
         if (shopData.code == ERR_OK) {
-          this.list = response.data.data.item;
+          let items = response.data.data.item;
+          this.list = items.map(v => {
+            this.$set(v, 'edit', false)
+            return v
+          });
           this.listLoading = false;
           this.totalCount = parseInt(response.data.data.totalCount);
           document.body.scrollTop = 0;
