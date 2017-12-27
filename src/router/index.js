@@ -39,6 +39,15 @@ export const asyncRouterMap = [
     children: [
       { path: 'index', component: _import('introduction/index'), name: '简述' }]
   }, {
+    path: '/clipboard',
+    component: layout,
+    redirect: '/clipboard/index',
+    icon: 'icon-fuzhi',
+    noDropdown: true,
+    children: [
+      { path: 'index', component: _import('clipboard/index'), name: 'clipboard' }
+    ]
+  }, {
     path: '/excel',
     component: layout,
     redirect: '/excel/download',
@@ -116,15 +125,6 @@ export const asyncRouterMap = [
           { path: 'table', component: _import('example/table/table'), name: 'table内编辑' }
         ]
       }
-    ]
-  }, {
-    path: '/clipboard',
-    component: layout,
-    redirect: '/clipboard/index',
-    icon: 'icon-fuzhi',
-    noDropdown: true,
-    children: [
-      { path: 'index', component: _import('clipboard/index'), name: 'clipboard' }
     ]
   }
 ]
