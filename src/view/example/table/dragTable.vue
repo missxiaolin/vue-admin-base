@@ -55,6 +55,8 @@ import { ERR_OK } from "@/api/config";
 
 import { Message } from "element-ui";
 
+import Sortable from 'sortablejs'
+
 // 格式化数据
 import { formatJson } from "common/js/excel/util";
 
@@ -71,7 +73,8 @@ export default {
       shopParams: {
         page: 1,
         per_page: 20
-      }
+      },
+      sortable: null
     };
   },
   created() {
@@ -106,10 +109,22 @@ export default {
           document.body.scrollTop = 0;
           // 兼容
           document.documentElement.scrollTop = 0;
+          this.$nextTick(() => {
+            this.setSort()
+          })
         } else {
           Message(shopData.message);
         }
       });
+    },
+    setSort() {
+      const el = document.querySelectorAll('.el-table__body-wrapper > table > tbody')[0]
+      this.sortable = Sortable.create(el, {
+        onEnd: evt => {
+          const tempIndex = this.newList.splice(evt.oldIndex, 1)[0]
+          this.newList.splice(evt.newIndex, 0, tempIndex)
+        }
+      })
     },
     // 显示个数
     handleSizeChange(val) {
