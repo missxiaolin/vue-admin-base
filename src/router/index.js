@@ -68,7 +68,8 @@ export const asyncRouterMap = [
       { path: 'splitpane', component: _import('assembly/splitpane'), name: 'Splitpane' },
       { path: 'mixin', component: _import('assembly/mixin'), name: '小组件' },
       { path: 'backtotop', component: _import('assembly/backToTop'), name: '返回顶部' },
-      { path: 'dndlist', component: _import('assembly/dndList'), name: '列表拖拽' }
+      { path: 'dndlist', component: _import('assembly/dndList'), name: '列表拖拽' },
+      { path: 'qiniu', component: _import('qiniu/upload'), name: '七牛' }
     ]
   }, {
     path: '/zip',
