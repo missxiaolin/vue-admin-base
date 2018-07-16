@@ -104,28 +104,28 @@
 
 
 <script>
-import { effectRipple, data2blob } from "./utils";
-import fetch from "common/js/fetch";
-import langBag from "./lang";
+import { effectRipple, data2blob } from './utils'
+import fetch from 'common/js/fetch'
+import langBag from './lang'
 const mimes = {
-  jpg: "image/jpeg",
-  png: "image/png",
-  gif: "image/gif",
-  svg: "image/svg+xml",
-  psd: "image/photoshop"
-};
+  jpg: 'image/jpeg',
+  png: 'image/png',
+  gif: 'image/gif',
+  svg: 'image/svg+xml',
+  psd: 'image/photoshop'
+}
 
 export default {
   props: {
     // 域，上传文件name，触发事件会带上（如果一个页面多个图片上传控件，可以做区分
     field: {
       type: String,
-      default: "avatar"
+      default: 'avatar'
     },
     // 上传地址
     url: {
       type: String,
-      default: ""
+      default: ''
     },
     // 其他要上传文件附带的数据，对象格式
     params: {
@@ -155,46 +155,46 @@ export default {
     // 语言类型
     langType: {
       type: String,
-      default: "zh"
+      default: 'zh'
     }
   },
-  data() {
+  data () {
     let that = this,
       { langType, width, height } = that,
       isSupported = true,
-      lang = langBag[langType] ? langBag[langType] : lang["zh"];
+      lang = langBag[langType] ? langBag[langType] : lang['zh']
 
-    if (typeof FormData != "function") {
-      isSupported = false;
+    if (typeof FormData !== 'function') {
+      isSupported = false
     }
     return {
       show: true,
       // 图片的mime
-      mime: mimes["jpg"],
+      mime: mimes['jpg'],
       // 语言包
       lang,
       // 浏览器是否支持该控件
       isSupported,
       // 步骤
-      step: 1, //1选择文件 2剪裁 3上传
+      step: 1, // 1选择文件 2剪裁 3上传
       // 上传状态及进度
-      loading: 0, //0未开始 1正在 2成功 3错误
+      loading: 0, // 0未开始 1正在 2成功 3错误
       progress: 0,
       // 是否有错误及错误信息
       hasError: false,
-      errorMsg: "",
+      errorMsg: '',
       // 需求图宽高比
       ratio: width / height,
       // 原图地址、生成图片地址
       sourceImg: null,
-      sourceImgUrl: "",
-      createImgUrl: "",
+      sourceImgUrl: '',
+      createImgUrl: '',
       // 原图片拖动事件初始值
       sourceImgMouseDown: {
         on: false,
-        mX: 0, //鼠标按下的坐标
+        mX: 0, // 鼠标按下的坐标
         mY: 0,
-        x: 0, //scale原图坐标
+        x: 0, // scale原图坐标
         y: 0
       },
       // 生成图片预览的容器大小
@@ -210,42 +210,42 @@ export default {
       },
       // 原图展示属性
       scale: {
-        zoomAddOn: false, //按钮缩放事件开启
-        zoomSubOn: false, //按钮缩放事件开启
-        range: 1, //最大100
+        zoomAddOn: false, // 按钮缩放事件开启
+        zoomSubOn: false, // 按钮缩放事件开启
+        range: 1, // 最大100
         x: 0,
         y: 0,
         width: 0,
         height: 0,
         maxWidth: 0,
         maxHeight: 0,
-        minWidth: 0, //最宽
+        minWidth: 0, // 最宽
         minHeight: 0,
-        naturalWidth: 0, //原宽
+        naturalWidth: 0, // 原宽
         naturalHeight: 0
       }
-    };
+    }
   },
   computed: {
     // 进度条样式
-    progressStyle() {
-      let { progress } = this;
+    progressStyle () {
+      let { progress } = this
       return {
-        width: progress + "%"
-      };
+        width: progress + '%'
+      }
     },
     // 原图样式
-    sourceImgStyle() {
-      let { scale, sourceImgMasking } = this;
+    sourceImgStyle () {
+      let { scale, sourceImgMasking } = this
       return {
-        top: scale.y + sourceImgMasking.y + "px",
-        left: scale.x + sourceImgMasking.x + "px",
-        width: scale.width + "px",
-        height: scale.height + "px"
-      };
+        top: scale.y + sourceImgMasking.y + 'px',
+        left: scale.x + sourceImgMasking.x + 'px',
+        width: scale.width + 'px',
+        height: scale.height + 'px'
+      }
     },
     // 原图蒙版属性
-    sourceImgMasking() {
+    sourceImgMasking () {
       let { width, height, ratio, sourceImgContainer } = this,
         sic = sourceImgContainer,
         sicRatio = sic.width / sic.height, // 原图容器宽高比
@@ -253,16 +253,16 @@ export default {
         y = 0,
         w = sic.width,
         h = sic.height,
-        scale = 1;
+        scale = 1
       if (ratio < sicRatio) {
-        scale = sic.height / height;
-        w = sic.height * ratio;
-        x = (sic.width - w) / 2;
+        scale = sic.height / height
+        w = sic.height * ratio
+        x = (sic.width - w) / 2
       }
       if (ratio > sicRatio) {
-        scale = sic.width / width;
-        h = sic.width / ratio;
-        y = (sic.height - h) / 2;
+        scale = sic.width / width
+        h = sic.width / ratio
+        y = (sic.height - h) / 2
       }
       return {
         scale, // 蒙版相对需求宽高的缩放
@@ -270,122 +270,122 @@ export default {
         y,
         width: w,
         height: h
-      };
+      }
     },
     // 原图遮罩样式
-    sourceImgShadeStyle() {
+    sourceImgShadeStyle () {
       let sic = this.sourceImgContainer,
         sim = this.sourceImgMasking,
         w = sim.width == sic.width ? sim.width : (sic.width - sim.width) / 2,
         h =
-          sim.height == sic.height ? sim.height : (sic.height - sim.height) / 2;
+          sim.height == sic.height ? sim.height : (sic.height - sim.height) / 2
       return {
-        width: w + "px",
-        height: h + "px"
-      };
+        width: w + 'px',
+        height: h + 'px'
+      }
     },
-    previewStyle() {
+    previewStyle () {
       let { width, height, ratio, previewContainer } = this,
         pc = previewContainer,
         w = pc.width,
         h = pc.height,
-        pcRatio = w / h;
+        pcRatio = w / h
       if (ratio < pcRatio) {
-        w = pc.height * ratio;
+        w = pc.height * ratio
       }
       if (ratio > pcRatio) {
-        h = pc.width / ratio;
+        h = pc.width / ratio
       }
       return {
-        width: w + "px",
-        height: h + "px"
-      };
+        width: w + 'px',
+        height: h + 'px'
+      }
     }
   },
   methods: {
     // 点击波纹效果
-    ripple(e) {
-      effectRipple(e);
+    ripple (e) {
+      effectRipple(e)
     },
     // 关闭控件
-    off() {
-      this.show = false;
-      this.$emit("close");
+    off () {
+      this.show = false
+      this.$emit('close')
     },
     // 设置步骤
-    setStep(step) {
-      let that = this;
-      setTimeout(function() {
-        that.step = step;
-      }, 200);
+    setStep (step) {
+      let that = this
+      setTimeout(function () {
+        that.step = step
+      }, 200)
     },
     /* 图片选择区域函数绑定
-             ---------------------------------------------------------------*/
-    preventDefault(e) {
-      e.preventDefault();
-      return false;
+             --------------------------------------------------------------- */
+    preventDefault (e) {
+      e.preventDefault()
+      return false
     },
-    handleClick(e) {
+    handleClick (e) {
       if (this.loading !== 1) {
         if (e.target !== this.$refs.fileinput) {
-          e.preventDefault();
+          e.preventDefault()
           if (document.activeElement !== this.$refs) {
-            this.$refs.fileinput.click();
+            this.$refs.fileinput.click()
           }
         }
       }
     },
-    handleChange(e) {
-      e.preventDefault();
+    handleChange (e) {
+      e.preventDefault()
       if (this.loading !== 1) {
-        let files = e.target.files || e.dataTransfer.files;
-        this.reset();
+        let files = e.target.files || e.dataTransfer.files
+        this.reset()
         if (this.checkFile(files[0])) {
-          this.setSourceImg(files[0]);
+          this.setSourceImg(files[0])
         }
       }
     },
-    /* ---------------------------------------------------------------*/
+    /* --------------------------------------------------------------- */
     // 检测选择的文件是否合适
-    checkFile(file) {
+    checkFile (file) {
       let that = this,
-        { lang, maxSize } = that;
+        { lang, maxSize } = that
       // 仅限图片
-      if (file.type.indexOf("image") === -1) {
-        that.hasError = true;
-        that.errorMsg = lang.error.onlyImg;
-        return false;
+      if (file.type.indexOf('image') === -1) {
+        that.hasError = true
+        that.errorMsg = lang.error.onlyImg
+        return false
       }
-      this.mime = file.type;
+      this.mime = file.type
       // 超出大小
       if (file.size / 1024 > maxSize) {
-        that.hasError = true;
-        that.errorMsg = lang.error.outOfSize + maxSize + "kb";
-        return false;
+        that.hasError = true
+        that.errorMsg = lang.error.outOfSize + maxSize + 'kb'
+        return false
       }
-      return true;
+      return true
     },
     // 重置控件
-    reset() {
-      let that = this;
-      that.step = 1;
-      that.loading = 0;
-      that.hasError = false;
-      that.errorMsg = "";
-      that.progress = 0;
+    reset () {
+      let that = this
+      that.step = 1
+      that.loading = 0
+      that.hasError = false
+      that.errorMsg = ''
+      that.progress = 0
     },
     // 设置图片源
-    setSourceImg(file) {
+    setSourceImg (file) {
       let that = this,
-        fr = new FileReader();
-      fr.onload = function(e) {
-        that.sourceImgUrl = fr.result;
-        that.startCrop();
-      };
-      fr.readAsDataURL(file);
+        fr = new FileReader()
+      fr.onload = function (e) {
+        that.sourceImgUrl = fr.result
+        that.startCrop()
+      }
+      fr.readAsDataURL(file)
     },
     // 剪裁前准备工作
-    startCrop() {
+    startCrop () {
       let that = this,
         {
           width,
@@ -397,16 +397,16 @@ export default {
           lang
         } = that,
         sim = sourceImgMasking,
-        img = new Image();
-      img.src = sourceImgUrl;
-      img.onload = function() {
+        img = new Image()
+      img.src = sourceImgUrl
+      img.onload = function () {
         let nWidth = img.naturalWidth,
           nHeight = img.naturalHeight,
           nRatio = nWidth / nHeight,
           w = sim.width,
           h = sim.height,
           x = 0,
-          y = 0;
+          y = 0
         // 图片像素不达标
         //                    if (nWidth < width || nHeight < height) {
         //                        that.hasError = true;
@@ -414,41 +414,41 @@ export default {
         //                        return false;
         //                    }
         if (ratio > nRatio) {
-          h = w / nRatio;
-          y = (sim.height - h) / 2;
+          h = w / nRatio
+          y = (sim.height - h) / 2
         }
         if (ratio < nRatio) {
-          w = h * nRatio;
-          x = (sim.width - w) / 2;
+          w = h * nRatio
+          x = (sim.width - w) / 2
         }
-        scale.range = 0;
-        scale.x = x;
-        scale.y = y;
-        scale.width = w;
-        scale.height = h;
-        scale.minWidth = w;
-        scale.minHeight = h;
-        scale.maxWidth = nWidth * sim.scale;
-        scale.maxHeight = nHeight * sim.scale;
-        scale.naturalWidth = nWidth;
-        scale.naturalHeight = nHeight;
-        that.sourceImg = img;
-        that.createImg();
-        that.setStep(2);
-      };
+        scale.range = 0
+        scale.x = x
+        scale.y = y
+        scale.width = w
+        scale.height = h
+        scale.minWidth = w
+        scale.minHeight = h
+        scale.maxWidth = nWidth * sim.scale
+        scale.maxHeight = nHeight * sim.scale
+        scale.naturalWidth = nWidth
+        scale.naturalHeight = nHeight
+        that.sourceImg = img
+        that.createImg()
+        that.setStep(2)
+      }
     },
     // 鼠标按下图片准备移动
-    imgStartMove(e) {
+    imgStartMove (e) {
       let { sourceImgMouseDown, scale } = this,
-        simd = sourceImgMouseDown;
-      simd.mX = e.screenX;
-      simd.mY = e.screenY;
-      simd.x = scale.x;
-      simd.y = scale.y;
-      simd.on = true;
+        simd = sourceImgMouseDown
+      simd.mX = e.screenX
+      simd.mY = e.screenY
+      simd.x = scale.x
+      simd.y = scale.y
+      simd.on = true
     },
     // 鼠标按下状态下移动，图片移动
-    imgMove(e) {
+    imgMove (e) {
       let {
           sourceImgMouseDown: { on, mX, mY, x, y },
           scale,
@@ -460,71 +460,71 @@ export default {
         dX = nX - mX,
         dY = nY - mY,
         rX = x + dX,
-        rY = y + dY;
-      if (!on) return;
+        rY = y + dY
+      if (!on) return
       if (rX > 0) {
-        rX = 0;
+        rX = 0
       }
       if (rY > 0) {
-        rY = 0;
+        rY = 0
       }
       if (rX < sim.width - scale.width) {
-        rX = sim.width - scale.width;
+        rX = sim.width - scale.width
       }
       if (rY < sim.height - scale.height) {
-        rY = sim.height - scale.height;
+        rY = sim.height - scale.height
       }
-      scale.x = rX;
-      scale.y = rY;
+      scale.x = rX
+      scale.y = rY
     },
     // 按钮按下开始放大
-    startZoomAdd(e) {
+    startZoomAdd (e) {
       let that = this,
-        { scale } = that;
-      scale.zoomAddOn = true;
-      function zoom() {
+        { scale } = that
+      scale.zoomAddOn = true
+      function zoom () {
         if (scale.zoomAddOn) {
-          let range = scale.range >= 100 ? 100 : ++scale.range;
-          that.zoomImg(range);
-          setTimeout(function() {
-            zoom();
-          }, 60);
+          let range = scale.range >= 100 ? 100 : ++scale.range
+          that.zoomImg(range)
+          setTimeout(function () {
+            zoom()
+          }, 60)
         }
       }
 
-      zoom();
+      zoom()
     },
     // 按钮松开或移开取消放大
-    endZoomAdd(e) {
-      this.scale.zoomAddOn = false;
+    endZoomAdd (e) {
+      this.scale.zoomAddOn = false
     },
     // 按钮按下开始缩小
-    startZoomSub(e) {
+    startZoomSub (e) {
       let that = this,
-        { scale } = that;
-      scale.zoomSubOn = true;
-      function zoom() {
+        { scale } = that
+      scale.zoomSubOn = true
+      function zoom () {
         if (scale.zoomSubOn) {
-          let range = scale.range <= 0 ? 0 : --scale.range;
-          that.zoomImg(range);
-          setTimeout(function() {
-            zoom();
-          }, 60);
+          let range = scale.range <= 0 ? 0 : --scale.range
+          that.zoomImg(range)
+          setTimeout(function () {
+            zoom()
+          }, 60)
         }
       }
 
-      zoom();
+      zoom()
     },
     // 按钮松开或移开取消缩小
-    endZoomSub(e) {
-      let { scale } = this;
-      scale.zoomSubOn = false;
+    endZoomSub (e) {
+      let { scale } = this
+      scale.zoomSubOn = false
     },
-    zoomChange(e) {
-      this.zoomImg(e.target.value);
+    zoomChange (e) {
+      this.zoomImg(e.target.value)
     },
     // 缩放原图
-    zoomImg(newRange) {
+    zoomImg (newRange) {
       let that = this,
         { sourceImgMasking, sourceImgMouseDown, scale } = this,
         {
@@ -547,34 +547,34 @@ export default {
         nHeight = minHeight + (maxHeight - minHeight) * newRange / 100,
         // 新坐标（根据蒙版中心点缩放）
         nX = sWidth / 2 - nWidth / width * (sWidth / 2 - x),
-        nY = sHeight / 2 - nHeight / height * (sHeight / 2 - y);
+        nY = sHeight / 2 - nHeight / height * (sHeight / 2 - y)
       // 判断新坐标是否超过蒙版限制
       if (nX > 0) {
-        nX = 0;
+        nX = 0
       }
       if (nY > 0) {
-        nY = 0;
+        nY = 0
       }
       if (nX < sWidth - nWidth) {
-        nX = sWidth - nWidth;
+        nX = sWidth - nWidth
       }
       if (nY < sHeight - nHeight) {
-        nY = sHeight - nHeight;
+        nY = sHeight - nHeight
       }
       // 赋值处理
-      scale.x = nX;
-      scale.y = nY;
-      scale.width = nWidth;
-      scale.height = nHeight;
-      scale.range = newRange;
-      setTimeout(function() {
+      scale.x = nX
+      scale.y = nY
+      scale.width = nWidth
+      scale.height = nHeight
+      scale.range = newRange
+      setTimeout(function () {
         if (scale.range == newRange) {
-          that.createImg();
+          that.createImg()
         }
-      }, 300);
+      }, 300)
     },
     // 生成需求图片
-    createImg(e) {
+    createImg (e) {
       let that = this,
         {
           mime,
@@ -583,10 +583,10 @@ export default {
           sourceImgMasking: { scale }
         } = that,
         canvas = that.$refs.canvas,
-        ctx = canvas.getContext("2d");
+        ctx = canvas.getContext('2d')
       if (e) {
         // 取消鼠标按下移动状态
-        that.sourceImgMouseDown.on = false;
+        that.sourceImgMouseDown.on = false
       }
       ctx.drawImage(
         sourceImg,
@@ -594,11 +594,11 @@ export default {
         y / scale,
         width / scale,
         height / scale
-      );
-      that.createImgUrl = canvas.toDataURL(mime);
+      )
+      that.createImgUrl = canvas.toDataURL(mime)
     },
     // 上传图片
-    upload() {
+    upload () {
       let that = this,
         {
           lang,
@@ -611,50 +611,50 @@ export default {
           ki,
           createImgUrl
         } = this,
-        fmData = new FormData();
+        fmData = new FormData()
       fmData.append(
         field,
         data2blob(createImgUrl, mime),
-        field + "." + imgFormat
-      );
+        field + '.' + imgFormat
+      )
       // 添加其他参数
-      if (typeof params == "object" && params) {
+      if (typeof params === 'object' && params) {
         Object.keys(params).forEach(k => {
-          fmData.append(k, params[k]);
-        });
+          fmData.append(k, params[k])
+        })
       }
       // 监听进度回调
-      function uploadProgress(event) {
-        console.log(event);
+      function uploadProgress (event) {
+        console.log(event)
         if (event.lengthComputable) {
-          that.progress = 100 * Math.round(event.loaded) / event.total;
+          that.progress = 100 * Math.round(event.loaded) / event.total
         }
       }
       // 上传文件
-      that.reset();
-      that.loading = 1;
-      that.setStep(3);
-      that.$emit("crop-success", createImgUrl, field, ki);
+      that.reset()
+      that.loading = 1
+      that.setStep(3)
+      that.$emit('crop-success', createImgUrl, field, ki)
       fetch({
         url,
-        method: "post",
+        method: 'post',
         data: fmData
       })
         .then(resData => {
-          that.loading = 2;
-          that.$emit("crop-upload-success", resData.data);
+          that.loading = 2
+          that.$emit('crop-upload-success', resData.data)
         })
         .catch(err => {
           if (that.value) {
-            that.loading = 3;
-            that.hasError = true;
-            that.errorMsg = lang.fail;
-            that.$emit("crop-upload-fail", err, field, ki);
+            that.loading = 3
+            that.hasError = true
+            that.errorMsg = lang.fail
+            that.$emit('crop-upload-fail', err, field, ki)
           }
-        });
+        })
     }
   }
-};
+}
 </script>
 
 <style scoped>

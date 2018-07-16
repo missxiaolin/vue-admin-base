@@ -1,0 +1,3 @@
+[submodule "src/base"]
+	path = src/base
+	url = https://github.com/missxiaolin/vue-assembly.git
