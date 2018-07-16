@@ -11,8 +11,6 @@ git submodule init
 
 git submodule update
 
-git c
-
 # install dependencies
 npm install
 
