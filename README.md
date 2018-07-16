@@ -5,6 +5,14 @@
 ## Build Setup
 
 ``` bash
+git clone https://github.com/missxiaolin/vue-admin-base.git
+
+git submodule init
+
+git submodule update
+
+git c
+
 # install dependencies
 npm install
 
